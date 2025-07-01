@@ -11,14 +11,25 @@ function createTodoController() {
     //--- Create and add new Todo Model
     function addTodo(title="New Item") {
         const itemModel = createTodoLogic(title);
-        const itemView = addTodoView();
+        const itemView = addTodoView(itemModel);
+        // itemView.updateView();
         const item = {model: itemModel, view: itemView};
         items.push(item);
     }
 
     //--- Create and add new Todo View
-    function addTodoView() {
-        return createTodoView();
+    function addTodoView(model) {
+        const view = createTodoView(model.title);
+        view.init();
+        view.updateInfo("Place Holder Text");
+        return view;
+    }
+
+    //--- Need a fair few functions to update elements of the todo item
+
+    //--- Update todo item information
+    function updateInfo() {
+
     }
 
 
