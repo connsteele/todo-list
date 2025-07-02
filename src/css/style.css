@@ -7,8 +7,3 @@ body {
     background-color: rgb(52, 52, 52);
 }
 
-#items {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}

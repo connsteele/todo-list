@@ -7,20 +7,6 @@ import { createProjectController } from "./js/projectController";
 //--- General Setup
 let emitter = mitt();
 let model = createProjectModel("test", emitter);
-let view = createProjectView();
+let view = createProjectView("Project 1");
 let controller = createProjectController(model, view, emitter);
-let itemCounter = 1;
 
-
-//--- Setup events
-const btnCreateItem = document.querySelector("#btnCreateItem");
-document.addEventListener("click", (e) => {
-    switch(e.target)
-    {
-        case btnCreateItem:
-            model.addItem(`Item ${itemCounter++}`);
-            break;
-        default:
-            // Nothing
-    }
-});

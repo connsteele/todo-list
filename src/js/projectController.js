@@ -8,25 +8,34 @@ function createProjectController(model, view, emitter) {
     let projModel = model;
     let projView = view;
     let projEmitter = emitter;
-    subEmitter();
 
     // Subscribe the emitter to relevant message from the model
-    function subEmitter() {
+    const subEmitter = () => {
         // New item added to todo
         projEmitter.on("todoAdd", (e) => {
             console.log("New item added to the array", e);
-            projView.update(projModel.todos.models);
+            projView.render(projModel.todos.models);
         });
     }
 
-    // Add a view to the project controller
-    function addView(view) {
-        
+    // Update model info
+    const updateModelInfo = (id, info) => {
+        model.todos.models[0].info = info;
     }
 
-    return {
-        addView
+    // Create a todo item
+    const createItem = () => {
+        projModel.addItem();
     }
+
+    //----------------------- Logic on creation -----------------------
+    subEmitter();
+    view.bindUpdateModelInfo(updateModelInfo);
+    view.bindCreateItem(createItem);
+
+    return {
+    }
+    
 }
 
 export {createProjectController};

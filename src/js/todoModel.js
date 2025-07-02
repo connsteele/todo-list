@@ -8,7 +8,7 @@ function formatDate(date) {
 
 // Factory function for todoLogic model
 function createTodoModel(title) {
-    let info = "";
+    let info = "Write here...";
     let id = undefined; // base off project name and array position?
     let priority = 0; // 0 to 5
     let dateCreated = formatDate(new Date());

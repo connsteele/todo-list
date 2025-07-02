@@ -29,6 +29,14 @@
     outline: 3px solid rgb(199, 0, 0);
 }
 
+.item p {
+    padding: 5px;
+}
+
 .item:hover p::selection {
     background-color: rgb(208, 234, 255);
+}
+
+.item p:focus {
+    
 }
