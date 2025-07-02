@@ -1,8 +1,14 @@
 import "./css/style.css";
-import { createTodoController } from "./js/todoController.js";
+import mitt from "mitt";
+import { createProjectModel } from "./js/projectModel";
+import { createProjectView } from "./js/projectView";
+import { createProjectController } from "./js/projectController";
 
 //--- General Setup
-let controller = createTodoController();
+let emitter = mitt();
+let model = createProjectModel("test", emitter);
+let view = createProjectView();
+let controller = createProjectController(model, view, emitter);
 let itemCounter = 1;
 
 
@@ -12,8 +18,7 @@ document.addEventListener("click", (e) => {
     switch(e.target)
     {
         case btnCreateItem:
-            controller.addTodo(`Item ${itemCounter++}`);
-            console.log(controller.items);
+            model.addItem(`Item ${itemCounter++}`);
             break;
         default:
             // Nothing

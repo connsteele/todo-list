@@ -15,3 +15,20 @@
 .item:hover {
     outline: 4px solid rgb(65, 138, 255);
 }
+
+.item button {
+    aspect-ratio: 1 / 1;
+    height: 15px;
+    width: 15px;
+    outline: 3px solid rgb(0, 152, 199);
+    border-radius: 2px;
+    border: 0;
+}
+
+#delete-btn {
+    outline: 3px solid rgb(199, 0, 0);
+}
+
+.item:hover p::selection {
+    background-color: rgb(208, 234, 255);
+}
