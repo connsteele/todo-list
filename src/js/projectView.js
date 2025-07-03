@@ -19,6 +19,15 @@ function createProjectView(title) {
             const card = document.createElement("div");
             card.className = "item";
             card.dataset.itemId = item.id;
+            const divButtons = document.createElement("div");
+            divButtons.className = "buttons";
+            const btnDone = document.createElement("button");
+            btnDone.type = "button";
+            const btnEdit = document.createElement("button");
+            btnEdit.type = "button";
+            const btnDelete = document.createElement("button");
+            btnDelete.type = "button";
+            divButtons.append(btnDone, btnEdit, btnDelete);
             const header = document.createElement("div");
             header.className = "card-header";
             const title = document.createElement("input");
@@ -26,6 +35,7 @@ function createProjectView(title) {
             title.type = "text";
             title.value = item.title;
             const info = document.createElement("textarea");
+            info.className = "info";
             // if there is no info use placeholder text
             if (item.info === "") {
                 info.placeholder = "Enter a note here..."
@@ -34,12 +44,13 @@ function createProjectView(title) {
                 info.innerText = item.info;
             }
             
-            
 
             // Add info to card
+            card.appendChild(divButtons);
             header.appendChild(title);
             card.appendChild(header);
             card.appendChild(info);
+
 
             // Add card to page
             divItems.appendChild(card);
