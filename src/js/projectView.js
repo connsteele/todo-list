@@ -23,10 +23,14 @@ function createProjectView(title) {
             divButtons.className = "buttons";
             const btnDone = document.createElement("button");
             btnDone.type = "button";
+            btnDone.innerText = "✔";
+            btnDone.title = "Status";
             const btnEdit = document.createElement("button");
             btnEdit.type = "button";
+            btnEdit.title = "Edit";
             const btnDelete = document.createElement("button");
             btnDelete.type = "button";
+            btnDelete.title = "Delete";
             divButtons.append(btnDone, btnEdit, btnDelete);
             const header = document.createElement("div");
             header.className = "card-header";
@@ -34,15 +38,11 @@ function createProjectView(title) {
             title.className = "card-title";
             title.type = "text";
             title.value = item.title;
+            title.placeholder = "New Item"; // only displays if string is ""
             const info = document.createElement("textarea");
             info.className = "info";
-            // if there is no info use placeholder text
-            if (item.info === "") {
-                info.placeholder = "Enter a note here..."
-            }
-            else {
-                info.innerText = item.info;
-            }
+            info.innerText = item.info;
+            info.placeholder = "Enter a note here..." // only displays if string is ""
             
 
             // Add info to card

@@ -50,7 +50,7 @@
     .card-title {
         width: 100%;
         padding: var(--padding-input);
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: bold;
         text-overflow: ellipsis;
         border: none;
@@ -64,7 +64,7 @@
 
     div.buttons {
         display:  grid;
-        grid-template-columns: repeat(1fr, 3);
+        align-content: center;
         gap: 1rem;
         padding: 1rem;
         grid-column: 2 / 3;

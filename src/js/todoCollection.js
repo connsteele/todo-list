@@ -2,7 +2,7 @@ import { createTodoModel } from "./todoModel";
 
 function createTodoCollection () {
     // Push a new item to the end of the list and return it
-    const pushItem = (name="New Item", project) => {
+    const pushItem = (name="", project) => {
         const id = `${project}[${length()}]`;
         const item = createTodoModel(name, id);
         models.push(item);
