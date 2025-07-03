@@ -18,12 +18,12 @@ function createProjectController(model, view, emitter) {
         });
     }
 
-    // Callback for updates to card U/I interaction, dispatch changes to model
+    // Callback for updates to card UI interaction, dispatch changes to model
     const updateCardInfo = (id, info) => {
         model.updateTodoItem(id, info);
     }
 
-    // Create a todo item
+    // Callback for new card created in UI, tell the model it needs a new item
     const createItem = () => {
         projModel.addItem();
     }

@@ -9,7 +9,7 @@ function createProjectModel(name, emitter) {
     let todos = createTodoCollection();
 
     // Ask the collection to add a new item to the end and emit a message
-    function addItem(name="") {
+    function addItem(name=undefined) {
         const item = todos.pushItem(name, projName);
         projEmitter.emit("todoAdd", {item, todos});
     }

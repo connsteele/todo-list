@@ -19,16 +19,26 @@ function createProjectView(title) {
             const card = document.createElement("div");
             card.className = "item";
             card.dataset.itemId = item.id;
-            const title = document.createElement("h1");
-            title.innerText = item.title;
-            const hr = document.createElement("hr");
-            const info = document.createElement("p");
-            info.innerText = item.info;
-            info.contentEditable = "true";
+            const header = document.createElement("div");
+            header.className = "card-header";
+            const title = document.createElement("input");
+            title.className = "card-title";
+            title.type = "text";
+            title.value = item.title;
+            const info = document.createElement("textarea");
+            // if there is no info use placeholder text
+            if (item.info === "") {
+                info.placeholder = "Enter a note here..."
+            }
+            else {
+                info.innerText = item.info;
+            }
+            
+            
 
             // Add info to card
-            card.appendChild(title);
-            card.appendChild(hr);
+            header.appendChild(title);
+            card.appendChild(header);
             card.appendChild(info);
 
             // Add card to page
@@ -55,8 +65,8 @@ function createProjectView(title) {
     // Settup a callback for input events on cards
     const bindupdateCardInfo = (handler) => {
         document.addEventListener("input", (e) => {
-            if (e.target.nodeName === "P") {
-                handler(e.target.parentElement.dataset.itemId, e.target.innerText);
+            if (e.target.nodeName === "TEXTAREA") {
+                handler(e.target.parentElement.dataset.itemId, e.target.value);
                 // if (e.target.className === "item") {
                 //     handler(0, info);
                 // }
