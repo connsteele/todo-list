@@ -10,8 +10,13 @@ function createProjectModel(name, emitter) {
 
     // Ask the collection to add a new item to the end and emit a message
     function addItem(name="") {
-        const item = todos.pushItem(name);
+        const item = todos.pushItem(name, projName);
         projEmitter.emit("todoAdd", {item, todos});
+    }
+
+    // Update a specific item in the array
+    const updateTodoItem = (id, info) => {
+        todos.updateEntry(id, info);
     }
 
 
@@ -19,6 +24,7 @@ function createProjectModel(name, emitter) {
         name,
         todos,
         addItem,
+        updateTodoItem
     }
 }
 

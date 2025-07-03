@@ -6,7 +6,8 @@ import { createProjectController } from "./js/projectController";
 
 //--- General Setup
 let emitter = mitt();
-let model = createProjectModel("test", emitter);
-let view = createProjectView("Project 1");
+let projectName = "Test Project"
+let model = createProjectModel(projectName, emitter);
+let view = createProjectView(projectName);
 let controller = createProjectController(model, view, emitter);
 

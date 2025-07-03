@@ -14,9 +14,20 @@
     gap: 1rem;
     border-radius: 1rem;
     outline: 3px solid black;
+    background-color: rgb(100, 100, 100);
 
     h1 {
-        color: white;
+        color: black;
+    }
+
+    button {
+        padding: .5rem 1rem .5rem 1rem;
+        border-radius: .5rem;
+        border: 0;
+        background-color: whitesmoke;
+    }
+    button:hover {
+        outline: 3px solid rgb(0, 152, 199);
     }
 }
 

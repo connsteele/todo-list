@@ -18,9 +18,9 @@ function createProjectController(model, view, emitter) {
         });
     }
 
-    // Update model info
-    const updateModelInfo = (id, info) => {
-        model.todos.models[0].info = info;
+    // Callback for updates to card U/I interaction, dispatch changes to model
+    const updateCardInfo = (id, info) => {
+        model.updateTodoItem(id, info);
     }
 
     // Create a todo item
@@ -30,7 +30,7 @@ function createProjectController(model, view, emitter) {
 
     //----------------------- Logic on creation -----------------------
     subEmitter();
-    view.bindUpdateModelInfo(updateModelInfo);
+    view.bindupdateCardInfo(updateCardInfo);
     view.bindCreateItem(createItem);
 
     return {

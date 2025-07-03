@@ -14,10 +14,11 @@ function createProjectView(title) {
     function render(items) {
         clearItems();
 
-        // Add cards to a project
+        // Add cards to a project for each todoModel
         items.forEach(item => {
-            const ele = document.createElement("div");
-            ele.className = "item";
+            const card = document.createElement("div");
+            card.className = "item";
+            card.dataset.itemId = item.id;
             const title = document.createElement("h1");
             title.innerText = item.title;
             const hr = document.createElement("hr");
@@ -26,12 +27,12 @@ function createProjectView(title) {
             info.contentEditable = "true";
 
             // Add info to card
-            ele.appendChild(title);
-            ele.appendChild(hr);
-            ele.appendChild(info);
+            card.appendChild(title);
+            card.appendChild(hr);
+            card.appendChild(info);
 
             // Add card to page
-            divItems.appendChild(ele);
+            divItems.appendChild(card);
         });
         
         // Add the project to the projects view
@@ -52,12 +53,15 @@ function createProjectView(title) {
     }
     
     // Settup a callback for input events on cards
-    const bindUpdateModelInfo = (handler) => {
+    const bindupdateCardInfo = (handler) => {
         document.addEventListener("input", (e) => {
-            handler(0, e.target.innerText);
-            // if (e.target.className === "item") {
-            //     handler(0, info);
-            // }
+            if (e.target.nodeName === "P") {
+                handler(e.target.parentElement.dataset.itemId, e.target.innerText);
+                // if (e.target.className === "item") {
+                //     handler(0, info);
+                // }
+            }
+
         });
     }
 
@@ -79,7 +83,7 @@ function createProjectView(title) {
 
     return {
         render,
-        bindUpdateModelInfo,
+        bindupdateCardInfo,
         bindCreateItem
     }
 }
