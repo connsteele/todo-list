@@ -1,22 +1,29 @@
 import { createTodoModel } from "./todoModel";
 
 function createTodoCollection () {
-    // Push a new item to the end of the list and return it
-    const pushItem = (name="", project) => {
-        const id = `${project}[${count++}]`;
-        const item = createTodoModel(name, id);
-        models.push(item);
+
+    // Create and insert a new item into a collection
+    const createItem = (itemName="", projectName) => {
+        const id = `${projectName}[${count++}]`;
+        const item = createTodoModel(itemName, id);
+        modelMap.set(id, item);
         return item;
     }
+
+    // Return an item from the model map
+    const getItem = (id) => modelMap.get(id);
+
+    // Return the model map (probably hide this more when you have time)
+    const getMap = () => modelMap;
 
     // Return the length of the internal model array
     const length = () => models.length;
 
     // Update a specific item in models specific by its ID
-    const updateEntry = (edited) => {
-        const item = models.find(model => model.id === edited.id);
-        if (!item) {
-            console.error("todoCollection: No model matches id");
+    const updateEntry = (edited, key) => {
+        const item = modelMap.get(key);
+        if (item === undefined) {
+            console.error("todoCollection: No model paired with key");
             return;
         }
 
@@ -37,13 +44,14 @@ function createTodoCollection () {
     
 
     //-------------------- Variables and logic --------------------
-    let models = [];
+    let modelMap = new Map();
     let count = 1; // used to create unique ids for models
 
     return {
-        models,
-        pushItem,
+        createItem,
         length,
+        getItem,
+        getMap,
         updateEntry
     }
 }

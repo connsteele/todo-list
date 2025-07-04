@@ -13,14 +13,15 @@ function createProjectController(model, view, emitter) {
     const subEmitter = () => {
         // New item added to todo
         projEmitter.on("todoAdd", (e) => {
-            console.log("New item added to the array", e);
-            projView.render(projModel.todos.models);
+            console.log("New item added to collection", e);
+
+            projView.render(projModel.todos.getMap());
         });
     }
 
     // Callback for updates to card UI interaction, dispatch changes to model
-    const updateCard = (obj) => {
-        model.updateTodoItem(obj);
+    const updateCard = (viewItem) => {
+        projModel.updateTodoItem(viewItem);
     }
 
     // Callback for new card created in UI, tell the model it needs a new item

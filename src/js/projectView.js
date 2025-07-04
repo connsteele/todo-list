@@ -13,24 +13,22 @@ function createProjectView(title) {
     }
 
     // Add and render UI for all elements
-    function render(items) {
+    function render(map) {
         clearItems();
 
         // Add cards to a project for each todoModel
-        items.forEach(item => {
-            renderCardSmall(item)
-        });
+        map.forEach(renderCardSmall);
         
         // Add the project to the projects view
         divProject.appendChild(divItems);
     }
 
     // Add and render UI for a todo item card in the general project view mode
-    const renderCardSmall = (item) => {
+    const renderCardSmall = (item, key) => {
         // Card setup
         const card = document.createElement("div");
         card.className = "item";
-        card.dataset.itemId = item.id;
+        card.dataset.itemId = key;
         // Card header and title
         const header = document.createElement("div");
         header.className = "card-header";
