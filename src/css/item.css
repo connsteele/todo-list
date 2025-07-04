@@ -35,6 +35,16 @@
         outline: 2px solid var(--color-select);
     }
 
+    input {
+        padding: var(--padding-input);
+        border: none;
+        border-radius: 5px;
+    }
+
+    input:focus {
+        outline: 2px solid var(--color-select);
+    }
+
     
     div.card-header {
         grid-area: 1 / 1 / 2 / 2;
@@ -49,19 +59,11 @@
 
     .card-title {
         width: 100%;
-        padding: var(--padding-input);
         font-size: 1.25rem;
         font-weight: bold;
         text-overflow: ellipsis;
-        border: none;
-        border-radius: 5px;
-    }
 
-    .card-title:focus {
-        outline: 2px solid var(--color-select);
-        
     }
-
     div.buttons {
         display:  grid;
         align-content: center;
@@ -83,6 +85,21 @@
         }
     }
 
+}
+
+.priority {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: start;
+    align-items: center; */
+    gap: 5px;
+
+    label {
+        padding: var(--padding-input);
+    }
+    input[type=number] {
+        font-weight: bold;
+    }
 }
 
 .item:hover {

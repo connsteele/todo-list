@@ -27,6 +27,9 @@ function createTodoCollection () {
         if (edited.title && edited.title !== item.title) {
             item.title = edited.title;
         }
+        if (edited.priority && edited.priority !== item.priority) {
+            item.priority = edited.priority;
+        }
     }
     
 

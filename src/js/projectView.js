@@ -11,53 +11,84 @@ function createProjectView(title) {
         }
     }
 
+    // Add and render UI for all elements
     function render(items) {
         clearItems();
 
         // Add cards to a project for each todoModel
         items.forEach(item => {
-            const card = document.createElement("div");
-            card.className = "item";
-            card.dataset.itemId = item.id;
-            const divButtons = document.createElement("div");
-            divButtons.className = "buttons";
-            const btnDone = document.createElement("button");
-            btnDone.type = "button";
-            btnDone.innerText = "✔";
-            btnDone.title = "Status";
-            const btnEdit = document.createElement("button");
-            btnEdit.type = "button";
-            btnEdit.title = "Edit";
-            const btnDelete = document.createElement("button");
-            btnDelete.type = "button";
-            btnDelete.title = "Delete";
-            divButtons.append(btnDone, btnEdit, btnDelete);
-            const header = document.createElement("div");
-            header.className = "card-header";
-            const title = document.createElement("input");
-            title.className = "card-title";
-            title.type = "text";
-            title.value = item.title;
-            title.placeholder = "New Item"; // only displays if string is ""
-            const info = document.createElement("textarea");
-            info.className = "info";
-            info.innerText = item.info;
-            info.placeholder = "Enter a note here..." // only displays if string is ""
-            
-
-            // Add info to card
-            card.appendChild(divButtons);
-            header.appendChild(title);
-            card.appendChild(header);
-            card.appendChild(info);
-
-
-            // Add card to page
-            divItems.appendChild(card);
+            renderCardSmall(item)
         });
         
         // Add the project to the projects view
         divProject.appendChild(divItems);
+    }
+
+    // Add and render UI for a todo item card in the general project view mode
+    const renderCardSmall = (item) => {
+        // Card setup
+        const card = document.createElement("div");
+        card.className = "item";
+        card.dataset.itemId = item.id;
+        // Card header and title
+        const header = document.createElement("div");
+        header.className = "card-header";
+        const title = document.createElement("input");
+        title.className = "card-title";
+        title.type = "text";
+        title.value = item.title;
+        title.placeholder = "New Item"; // only displays if string is ""
+        // Card info
+        const info = document.createElement("textarea");
+        info.className = "info";
+        info.innerText = item.info;
+        info.placeholder = "Enter a note here..." // only displays if string is ""
+        // Card priority
+        const prioDiv = document.createElement("div");
+        prioDiv.className = "priority";
+        const prioMin = 0;
+        const prioMax = 5;
+        const prioLabel = document.createElement("label");
+        const prioInput = document.createElement("input");
+        const prioID = `${item.id}-priority`;
+        prioLabel.htmlFor = prioID;
+        prioLabel.innerText = "Priority";
+        prioInput.id = prioID;
+        prioInput.className = "priority-input";
+        prioInput.type = "number";
+        prioInput.min = prioMin;
+        prioInput.max = prioMax;
+        prioInput.value = ( item.priority !== undefined ) ? item.priority : prioMin;
+        prioDiv.append(prioLabel, prioInput);
+
+        // Card due date
+
+        // Card buttons
+        const divButtons = document.createElement("div");
+        divButtons.className = "buttons";
+        const btnDone = document.createElement("button");
+        btnDone.type = "button";
+        btnDone.innerText = "✔";
+        btnDone.title = "Status";
+        const btnEdit = document.createElement("button");
+        btnEdit.type = "button";
+        btnEdit.title = "Edit";
+        const btnDelete = document.createElement("button");
+        btnDelete.type = "button";
+        btnDelete.title = "Delete";
+        divButtons.append(btnDone, btnEdit, btnDelete);
+        
+
+        // Add nodes to the card
+        card.appendChild(divButtons);
+        header.appendChild(title);
+        card.appendChild(header);
+        card.appendChild(info);
+        card.appendChild(prioDiv);
+
+
+        // Add card to page
+        divItems.appendChild(card);
     }
 
     // Setup a callback for creating item cards
@@ -91,11 +122,16 @@ function createProjectView(title) {
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
                 editedItem.title = e.target.value;
             }
+            else if (target.className === "priority-input") {
+                editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.priority = e.target.value;
+            }
 
             handler(editedItem);
         });
     }
 
+    //------------------ Module Variables and logic to run at creation ------------------
     let projTitle = title;
     const divProjects = document.querySelector("#projects");
     const divProject = document.createElement("div");

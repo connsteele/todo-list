@@ -11,7 +11,7 @@ function createTodoModel(inTitle, inId) {
     let title = inTitle;
     let info = "";
     let id = inId; // base off project name and array position?
-    let priority = 0; // 0 to 5
+    let priority = undefined; // 0 to 5
     let dateCreated = formatDate(new Date());
     let dateDue = undefined;
     let tags = {};
