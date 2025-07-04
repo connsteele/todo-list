@@ -3,7 +3,7 @@ import { format } from "date-fns"
 
 // Format a given date to a more readable format
 function formatDate(date) {
-    return format(date,  "MMM dd, yyyy");
+    return format(date,  "yyyy-mm-dd");
 }
 
 // Factory function for todoLogic model
@@ -25,6 +25,7 @@ function createTodoModel(inTitle, inId) {
         dateCreated,
         dateDue,
         tags,
+        formatDate
     }
 }
 

@@ -2,6 +2,7 @@
 import "../css/style.css"
 import "../css/project.css"
 import "../css/item.css"
+import { format, parse } from "date-fns"
 
 function createProjectView(title) {
     // Remove all children divItems
@@ -60,9 +61,19 @@ function createProjectView(title) {
         prioInput.max = prioMax;
         prioInput.value = ( item.priority !== undefined ) ? item.priority : prioMin;
         prioDiv.append(prioLabel, prioInput);
-
         // Card due date
-
+        const dueDiv = document.createElement("div");
+        const dueID = `${item.id}-due`;
+        dueDiv.className = "due";
+        const dueLabel = document.createElement("label");
+        dueLabel.innerText = "Due"
+        dueLabel.htmlFor = dueID;
+        const dueInput = document.createElement("input");
+        dueInput.id = dueID;
+        dueInput.type = "date";
+        dueInput.className = "due-input";
+        dueInput.value = item.dateDue !== undefined ? item.dateDue : undefined;
+        dueDiv.append(dueLabel, dueInput);
         // Card buttons
         const divButtons = document.createElement("div");
         divButtons.className = "buttons";
@@ -83,8 +94,9 @@ function createProjectView(title) {
         card.appendChild(divButtons);
         header.appendChild(title);
         card.appendChild(header);
-        card.appendChild(info);
         card.appendChild(prioDiv);
+        card.appendChild(info);
+        card.appendChild(dueDiv);
 
 
         // Add card to page
@@ -133,6 +145,14 @@ function createProjectView(title) {
                 // Pass along
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
                 editedItem.priority = targetInt;
+            }
+            else if (target.className === "due-input") {
+                editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.dueDate = target.value;
+
+            }
+            else {
+                return;
             }
 
             handler(editedItem);

@@ -30,6 +30,9 @@ function createTodoCollection () {
         if (edited.priority && edited.priority !== item.priority) {
             item.priority = edited.priority;
         }
+        if (edited.dueDate && edited.dueDate !== item.dateDue ) {
+            item.dateDue = edited.dueDate;
+        }
     }
     
 
