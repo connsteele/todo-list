@@ -115,16 +115,24 @@ function createProjectView(title) {
             }
             
             if (target.nodeName === "TEXTAREA") {
-                editedItem.id = e.target.parentElement.dataset.itemId
-                editedItem.info = e.target.value;
+                editedItem.id = target.parentElement.dataset.itemId
+                editedItem.info = target.value;
             }
             else if (target.className === "card-title") {
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
-                editedItem.title = e.target.value;
+                editedItem.title = target.value;
             }
             else if (target.className === "priority-input") {
+                let targetInt = parseInt(target.value);
+                const targetMax = parseInt(target.max);
+                const targetMin = parseInt(target.min);
+                // If input is too large or too small fix it
+                targetInt = targetInt > targetMax ? targetMax : targetInt;
+                targetInt = targetInt < targetMin ? targetMin : targetInt;
+                target.value = targetInt; // fix in the UI also
+                // Pass along
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
-                editedItem.priority = e.target.value;
+                editedItem.priority = targetInt;
             }
 
             handler(editedItem);
