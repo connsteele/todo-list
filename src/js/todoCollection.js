@@ -3,7 +3,7 @@ import { createTodoModel } from "./todoModel";
 function createTodoCollection () {
     // Push a new item to the end of the list and return it
     const pushItem = (name="", project) => {
-        const id = `${project}[${length()}]`;
+        const id = `${project}[${count++}]`;
         const item = createTodoModel(name, id);
         models.push(item);
         return item;
@@ -38,6 +38,7 @@ function createTodoCollection () {
 
     //-------------------- Variables and logic --------------------
     let models = [];
+    let count = 1; // used to create unique ids for models
 
     return {
         models,
