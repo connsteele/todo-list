@@ -76,13 +76,23 @@ function createProjectView(title) {
     // Settup a callback for input events on cards
     const bindupdateCardInfo = (handler) => {
         document.addEventListener("input", (e) => {
-            if (e.target.nodeName === "TEXTAREA") {
-                handler(e.target.parentElement.dataset.itemId, e.target.value);
-                // if (e.target.className === "item") {
-                //     handler(0, info);
-                // }
+
+            // Add to item depending on what is edited
+            const target = e.target;
+            const editedItem = {
+
+            }
+            
+            if (target.nodeName === "TEXTAREA") {
+                editedItem.id = e.target.parentElement.dataset.itemId
+                editedItem.info = e.target.value;
+            }
+            else if (target.className === "card-title") {
+                editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.title = e.target.value;
             }
 
+            handler(editedItem);
         });
     }
 

@@ -13,14 +13,20 @@ function createTodoCollection () {
     const length = () => models.length;
 
     // Update a specific item in models specific by its ID
-    const updateEntry = (id, info) => {
-        const item = models.find(model => model.id === id);
+    const updateEntry = (edited) => {
+        const item = models.find(model => model.id === edited.id);
         if (!item) {
             console.error("todoCollection: No model matches id");
             return;
         }
 
-        item.info = info;
+        // Update model attributes that have been edited in the UI
+        if (edited.info && edited.info !== item.info) {
+            item.info = edited.info;
+        }
+        if (edited.title && edited.title !== item.title) {
+            item.title = edited.title;
+        }
     }
     
 

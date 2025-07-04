@@ -15,8 +15,8 @@ function createProjectModel(name, emitter) {
     }
 
     // Update a specific item in the array
-    const updateTodoItem = (id, info) => {
-        todos.updateEntry(id, info);
+    const updateTodoItem = (obj) => {
+        todos.updateEntry(obj);
     }
 
 

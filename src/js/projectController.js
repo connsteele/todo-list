@@ -19,8 +19,8 @@ function createProjectController(model, view, emitter) {
     }
 
     // Callback for updates to card UI interaction, dispatch changes to model
-    const updateCardInfo = (id, info) => {
-        model.updateTodoItem(id, info);
+    const updateCard = (obj) => {
+        model.updateTodoItem(obj);
     }
 
     // Callback for new card created in UI, tell the model it needs a new item
@@ -30,7 +30,7 @@ function createProjectController(model, view, emitter) {
 
     //----------------------- Logic on creation -----------------------
     subEmitter();
-    view.bindupdateCardInfo(updateCardInfo);
+    view.bindupdateCardInfo(updateCard);
     view.bindCreateItem(createItem);
 
     return {
