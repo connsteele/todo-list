@@ -12,6 +12,9 @@
     font-size: 16px;
     --color-select: rgb(65, 138, 255);
     --color-btn: rgb(160, 160, 160);
+    --outline-weight: 3px;
+    --outline-btn: var(--outline-weight) solid var(--color-btn);
+    --outline-select: var(--outline-weight) solid var(--color-select);
     --padding-input: 5px;
 
     textarea {
@@ -57,7 +60,7 @@
         text-overflow: ellipsis;
 
     }
-    div.buttons {
+    div.side-inputs {
         display:  grid;
         align-content: center;
         gap: 1rem;
@@ -67,15 +70,27 @@
 
         button {
             aspect-ratio: 1 / 1;
+            padding: 5px;
             height: 100%;
             width: auto;
-            outline: 3px solid var(--color-btn);
+            outline: var(--outline-btn);
             border-radius: 2px;
             border: 0;
         }
         button:hover {
-            outline: 3px solid var(--color-select);
+            outline: var(--outline-select);
         }
+    }
+
+    input[type=checkbox] {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        aspect-ratio: 1 / 1;
+        accent-color: green;
+    }
+    input[type=checkbox]:focus {
+        outline: none;
     }
 
 }

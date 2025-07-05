@@ -3,6 +3,8 @@ import "../css/style.css"
 import "../css/project.css"
 import "../css/item.css"
 import { format, parse } from "date-fns"
+import imgEdit from "../svg/edit.svg"
+import imgTrash from "../svg/trash-2.svg"
 
 function createProjectView(title) {
     // Remove all children divItems
@@ -72,26 +74,38 @@ function createProjectView(title) {
         dueInput.className = "due-input";
         dueInput.value = item.dateDue !== undefined ? item.dateDue : undefined;
         dueDiv.append(dueLabel, dueInput);
-        // Card buttons
-        const divButtons = document.createElement("div");
-        divButtons.className = "buttons";
-        const btnDone = document.createElement("input");
-        btnDone.type = "checkbox";
-        btnDone.checked = item.done === true ? true : false;
-        btnDone.title = "Status";
+        //------- Side Inputs (checkbox and buttons) -------
+        const divSide = document.createElement("div");
+        divSide.className = "side-inputs";
+        // Side checkbox
+        const inputDone = document.createElement("input");
+        inputDone.type = "checkbox";
+        inputDone.checked = item.done === true ? true : false;
+        inputDone.title = "Status";
+        inputDone.id = "done";
+        // Side buttons
         const btnEdit = document.createElement("button");
         btnEdit.type = "button";
         btnEdit.title = "Edit";
         btnEdit.id = "edit";
+        btnEdit.className = "card-button";
+        const btnEditImg = document.createElement("img");
+        btnEditImg.src = imgEdit;
+        btnEdit.appendChild(btnEditImg);
         const btnDelete = document.createElement("button");
         btnDelete.type = "button";
+        btnDelete.className = "card-button";
         btnDelete.title = "Delete";
         btnDelete.id = "delete";
-        divButtons.append(btnDone, btnEdit, btnDelete);
+        const btnDeleteImg = document.createElement("img");
+        btnDeleteImg.src = imgTrash;
+        btnDelete.appendChild(btnDeleteImg);
+        // Add all inputs and buttons to the side card area
+        divSide.append(inputDone, btnEdit, btnDelete);
         
 
         // Add nodes to the card
-        card.appendChild(divButtons);
+        card.appendChild(divSide);
         header.appendChild(title);
         card.appendChild(header);
         card.appendChild(prioDiv);
@@ -163,27 +177,39 @@ function createProjectView(title) {
     const bindClickHandler = (handler) => {
         document.addEventListener("click", (e) => {
             const target = e.target;
+
+            // Helper function
+            const createUpdateItem = (itemId) => {
+                return {
+                    id: itemId,
+                }
+            };
             
-            // buttons in card
-            if ((target.nodeName === "BUTTON" || target.nodeName === "INPUT") &&
-             target.parentElement.parentElement.className === "item") {
-                const editedItem = {
-                    id: target.parentElement.parentElement.dataset.itemId,
-                }
+            // Checkbox in card
+            if (target.id === "done") {
+                const updateItem = createUpdateItem(target.parentElement.parentElement.dataset.itemId);
+                updateItem.status = "toggle"; // toggle the current status
+                handler(updateItem);
+                return;
+            }
+            
 
-                if (target.title === "Status") {
-                    editedItem.status = "toggle"; // toggle the current status
-                }
-                else if (target.title === "Delete") {
-                    editedItem.delete = true;
-                }
-                else {
-                    return;
-                }
-                // else if edit
+            // Buttons in card
+            const btn = target.closest(".card-button");
+            if (btn) {
+                const updateItem = createUpdateItem(btn.parentElement.parentElement.dataset.itemId);
 
-
-                handler(editedItem);
+                switch (btn.id) {
+                    case "delete":
+                        updateItem.delete = true;
+                        handler(updateItem);
+                        break;
+                    case "edit":
+                        break
+                    default:
+                        // Nothing
+                }
+                return;
             }
         })
     }
