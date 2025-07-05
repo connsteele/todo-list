@@ -24,15 +24,24 @@ function createProjectController(model, view, emitter) {
         projModel.updateTodoItem(viewItem);
     }
 
+    // Callback for click interactions with card, dispatch changes to model
+    const cardClick = (viewItem) => {
+        if (viewItem.status === "toggle") {
+            projModel.updateTodoItem(viewItem);
+        }
+    }
+
     // Callback for new card created in UI, tell the model it needs a new item
     const createItem = () => {
         projModel.addItem();
     }
+    
 
     //----------------------- Logic on creation -----------------------
     subEmitter();
     view.bindupdateCardInfo(updateCard);
     view.bindCreateItem(createItem);
+    view.bindClickHandler(cardClick);
 
     return {
     }

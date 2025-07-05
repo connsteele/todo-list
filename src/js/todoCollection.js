@@ -13,8 +13,11 @@ function createTodoCollection () {
     // Return an item from the model map
     const getItem = (id) => modelMap.get(id);
 
-    // Return the model map (probably hide this more when you have time)
-    const getMap = () => modelMap;
+    // Return a copy of the model map so the source cannot be directly modified
+    const getMap = () =>  {
+        const copyMap = modelMap;
+        return copyMap;
+    }
 
     // Return the length of the internal model array
     const length = () => models.length;
@@ -39,6 +42,9 @@ function createTodoCollection () {
         }
         if (edited.dueDate && edited.dueDate !== item.dateDue ) {
             item.dateDue = edited.dueDate;
+        }
+        if (edited.status) {
+            item.done = !item.done;
         }
     }
     

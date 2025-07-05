@@ -49,7 +49,7 @@ function createProjectView(title) {
         const prioMax = 5;
         const prioLabel = document.createElement("label");
         const prioInput = document.createElement("input");
-        const prioID = `${item.id}-priority`;
+        const prioID = `${key}-priority`;
         prioLabel.htmlFor = prioID;
         prioLabel.innerText = "Priority";
         prioInput.id = prioID;
@@ -61,7 +61,7 @@ function createProjectView(title) {
         prioDiv.append(prioLabel, prioInput);
         // Card due date
         const dueDiv = document.createElement("div");
-        const dueID = `${item.id}-due`;
+        const dueID = `${key}-due`;
         dueDiv.className = "due";
         const dueLabel = document.createElement("label");
         dueLabel.innerText = "Due"
@@ -75,16 +75,19 @@ function createProjectView(title) {
         // Card buttons
         const divButtons = document.createElement("div");
         divButtons.className = "buttons";
-        const btnDone = document.createElement("button");
-        btnDone.type = "button";
-        btnDone.innerText = "✔";
+        const btnDone = document.createElement("input");
+        btnDone.type = "checkbox";
+        btnDone.checked = item.done === true ? true : false;
         btnDone.title = "Status";
+        btnDone.id = `${key}-status`;;
         const btnEdit = document.createElement("button");
         btnEdit.type = "button";
         btnEdit.title = "Edit";
+        btnEdit.id = "edit";
         const btnDelete = document.createElement("button");
         btnDelete.type = "button";
         btnDelete.title = "Delete";
+        btnDelete.id = "delete";
         divButtons.append(btnDone, btnEdit, btnDelete);
         
 
@@ -157,6 +160,36 @@ function createProjectView(title) {
         });
     }
 
+    // Setup callback for clicking interactions with card
+    const bindClickHandler = (handler) => {
+        document.addEventListener("click", (e) => {
+            const target = e.target;
+            
+            // buttons in card
+            if ((target.nodeName === "BUTTON" || target.nodeName === "INPUT") &&
+             target.parentElement.parentElement.className === "item") {
+                const editedItem = {
+                    id: target.parentElement.parentElement.dataset.itemId,
+                }
+
+                switch (e.target.nodeName) {
+                    case "INPUT":
+                        editedItem.status = "toggle"; // toggle the current status
+                        break;
+                    case "edit":
+                        break;
+                    case "delete":
+                        editedItem.delete = true;
+                        break;
+                    default:
+                        return;
+                }
+
+                handler(editedItem);
+            }
+        })
+    }
+
     //------------------ Module Variables and logic to run at creation ------------------
     let projTitle = title;
     const divProjects = document.querySelector("#projects");
@@ -177,7 +210,8 @@ function createProjectView(title) {
     return {
         render,
         bindupdateCardInfo,
-        bindCreateItem
+        bindCreateItem,
+        bindClickHandler
     }
 }
 

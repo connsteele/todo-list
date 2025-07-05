@@ -10,6 +10,7 @@ function formatDate(date) {
 function createTodoModel(inTitle) {
     let title = inTitle;
     let info = "";
+    let done = false;
     let priority = undefined; // 0 to 5
     let dateCreated = formatDate(new Date());
     let dateDue = undefined;
@@ -23,6 +24,7 @@ function createTodoModel(inTitle) {
         dateCreated,
         dateDue,
         tags,
+        done,
         formatDate
     }
 }
