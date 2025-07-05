@@ -5,6 +5,57 @@
 }
 
 body {
+    display: grid;
+    grid-template-rows: 150px 1fr;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
     background-color: rgb(52, 52, 52);
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 1%;
+    padding-right: 5%;
+    grid-row: 1 / 2;
+    background-color: rgb(79, 179, 186);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    outline: 3px solid black;
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    input {
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1.5rem;
+    }
+    input:focus {
+        border: 0;
+        outline: 2px solid black;
+    }
+
+    .make-project {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    button {
+        font-size: 1.5rem;
+        padding: 5px;
+        border-radius: 5px;
+        border: 0;
+    }
+    button:hover {
+        outline: 2px solid black;
+    }
+}
+
+#projects {
+    grid-row: 2 / 3;
+}
