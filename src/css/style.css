@@ -58,4 +58,7 @@ body {
 
 #projects {
     grid-row: 2 / 3;
+    padding: 1rem;
+    display: flex;
+    justify-content:space-evenly;
 }

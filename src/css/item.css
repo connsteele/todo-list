@@ -11,7 +11,7 @@
     outline: 2px solid black;
     font-size: 16px;
     --color-select: rgb(65, 138, 255);
-    --color-btn: rgb(160, 160, 160);
+    --color-btn: rgb(182, 182, 182);
     --outline-weight: 3px;
     --outline-btn: var(--outline-weight) solid var(--color-btn);
     --outline-select: var(--outline-weight) solid var(--color-select);
