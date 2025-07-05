@@ -12,7 +12,13 @@ function createProjectModel(name, emitter) {
     function addItem(name=undefined) {
         // const item = todos.pushItem(name, projName);
         const item = todos.createItem(name, projName);
-        projEmitter.emit("todoAdd", {item, todos});
+        projEmitter.emit("render", {item, todos});
+    }
+
+    // Ask the collection to remove an item by key and emit a message
+    function removeItem(key){
+        todos.deleteItem(key);
+        projEmitter.emit("render", `${key} was deleted`);
     }
 
     // Update a specific item in the array
@@ -25,6 +31,7 @@ function createProjectModel(name, emitter) {
         name,
         todos,
         addItem,
+        removeItem,
         updateTodoItem
     }
 }

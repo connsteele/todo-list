@@ -12,8 +12,8 @@ function createProjectController(model, view, emitter) {
     // Subscribe the emitter to relevant message from the model
     const subEmitter = () => {
         // New item added to todo
-        projEmitter.on("todoAdd", (e) => {
-            console.log("New item added to collection", e);
+        projEmitter.on("render", (e) => {
+            console.log("Model changed, render update", e);
 
             projView.render(projModel.todos.getMap());
         });
@@ -28,6 +28,9 @@ function createProjectController(model, view, emitter) {
     const cardClick = (viewItem) => {
         if (viewItem.status === "toggle") {
             projModel.updateTodoItem(viewItem);
+        }
+        else if (viewItem.delete === true) {
+            projModel.removeItem(viewItem.id);
         }
     }
 

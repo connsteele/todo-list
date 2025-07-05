@@ -79,7 +79,6 @@ function createProjectView(title) {
         btnDone.type = "checkbox";
         btnDone.checked = item.done === true ? true : false;
         btnDone.title = "Status";
-        btnDone.id = `${key}-status`;;
         const btnEdit = document.createElement("button");
         btnEdit.type = "button";
         btnEdit.title = "Edit";
@@ -172,18 +171,17 @@ function createProjectView(title) {
                     id: target.parentElement.parentElement.dataset.itemId,
                 }
 
-                switch (e.target.nodeName) {
-                    case "INPUT":
-                        editedItem.status = "toggle"; // toggle the current status
-                        break;
-                    case "edit":
-                        break;
-                    case "delete":
-                        editedItem.delete = true;
-                        break;
-                    default:
-                        return;
+                if (target.title === "Status") {
+                    editedItem.status = "toggle"; // toggle the current status
                 }
+                else if (target.title === "Delete") {
+                    editedItem.delete = true;
+                }
+                else {
+                    return;
+                }
+                // else if edit
+
 
                 handler(editedItem);
             }

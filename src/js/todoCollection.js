@@ -10,6 +10,11 @@ function createTodoCollection () {
         return item;
     }
 
+    // Delete an item from the internal map given a key
+    const deleteItem = (key) => {
+        modelMap.delete(key);
+    }
+
     // Return an item from the model map
     const getItem = (id) => modelMap.get(id);
 
@@ -58,6 +63,7 @@ function createTodoCollection () {
         length,
         getItem,
         getMap,
+        deleteItem,
         updateEntry
     }
 }
