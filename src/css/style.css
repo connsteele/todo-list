@@ -17,7 +17,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding-left: 1%;
-    padding-right: 5%;
+    padding-right: 1%;
     grid-row: 1 / 2;
     background-color: rgb(79, 179, 186);
     border-bottom-left-radius: 1rem;
@@ -26,6 +26,10 @@ body {
 
     h1 {
         font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2rem;
     }
 
     input {
