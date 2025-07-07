@@ -122,7 +122,8 @@ function createProjectView(title) {
         document.addEventListener("click", (e) => {
             switch(e.target.className) {
                 case "create-item":
-                    handler();
+                    let projName = e.target.parentElement.querySelector("h1").innerText;
+                    handler(projName);
                     break;
                 default:
                     // Nothing

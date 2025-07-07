@@ -35,8 +35,8 @@ function createProjectController(model, view, emitter) {
     }
 
     // Callback for new card created in UI, tell the model it needs a new item
-    const createItem = () => {
-        projModel.addItem();
+    const createItem = (projName) => {
+        projModel.addItem(projName);
     }
     
 

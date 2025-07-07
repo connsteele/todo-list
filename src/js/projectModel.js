@@ -9,10 +9,11 @@ function createProjectModel(name, emitter) {
     let todos = createTodoCollection();
 
     // Ask the collection to add a new item to the end and emit a message
-    function addItem(name=undefined) {
-        // const item = todos.pushItem(name, projName);
-        const item = todos.createItem(name, projName);
-        projEmitter.emit("render", {item, todos});
+    function addItem(project, name=undefined) {
+        if (project === projName) {
+            const item = todos.createItem(name, projName);
+            projEmitter.emit("render", {item, todos});
+        }
     }
 
     // Ask the collection to remove an item by key and emit a message

@@ -14,7 +14,7 @@ let portfolio = createPortfolio();
 document.addEventListener("click", (e) => {
     const target = e.target;
     if (target.id === "project-create") {
-        let emitter = mitt();
+        const emitter = mitt();
 
         // Project Creation
         const inputName = document.querySelector("#project-name");
@@ -25,7 +25,7 @@ document.addEventListener("click", (e) => {
         }
         const model = createProjectModel(projectName, emitter);
         const view = createProjectView(projectName);
-        let controller = createProjectController(model, view, emitter);
+        const controller = createProjectController(model, view, emitter);
         portfolio.addProject(projectName, model);
         portfolio.printProjects();
     }

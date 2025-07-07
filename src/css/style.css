@@ -16,6 +16,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     padding-left: 1%;
     padding-right: 1%;
     grid-row: 1 / 2;
@@ -29,7 +30,7 @@ body {
     }
 
     h2 {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
 
     input {
@@ -46,6 +47,17 @@ body {
     .make-project {
         display: flex;
         align-items: center;
+        gap: 1rem;
+    }
+
+    .portfolio-area {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .portfolio-btns {
+        display: flex;
+        flex-direction: row;
         gap: 1rem;
     }
 
