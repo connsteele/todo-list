@@ -73,7 +73,7 @@ const createProjectView = (title) => {
         dueInput.id = dueID;
         dueInput.type = "date";
         dueInput.className = "due-input";
-        dueInput.value = item.dateDue !== undefined ? item.dateDue : undefined;
+        dueInput.value = item.due !== undefined ? item.due : undefined;
         dueDiv.append(dueLabel, dueInput);
         //------- Side Inputs (checkbox and buttons) -------
         const divSide = document.createElement("div");
