@@ -3,19 +3,17 @@ import { createTodoModel } from "./todoModel";
 const createTodoCollection = (load=undefined) => {
 
     // Create and insert a new item into a collection
-    const createItem = (itemName="", projectName) => {
-        const id = `${projectName}[${count++}]`;
-        const item = createTodoModel(itemName, id);
+    const createItem = (itemName="") => {
+        const id = crypto.randomUUID();
+        const item = createTodoModel(itemName);
         modelMap.set(id, item);
         return item;
     }
 
     // Create an item from existing data
-    const loadItem = (name, data, project) => {
-        const id = `${project}[${count++}]`;
-        const item = createTodoModel(name, id);
+    const loadItem = (id, data) => {
+        const item = createTodoModel(data.title);
         // set item attributes
-        item.title = data.title;
         item.info = data.info;
         item.done = data.done;
         item.priority = data.priority;
@@ -62,8 +60,8 @@ const createTodoCollection = (load=undefined) => {
         if (edited.priority && edited.priority !== item.priority) {
             item.priority = edited.priority;
         }
-        if (edited.dueDate && edited.dueDate !== item.dateDue ) {
-            item.due = edited.dueDate;
+        if (edited.due && edited.due !== item.due ) {
+            item.due = edited.due;
         }
         if (edited.status) {
             item.done = !item.done;
@@ -85,7 +83,7 @@ const createTodoCollection = (load=undefined) => {
         const loadTodos = load.todos.map;
         Object.entries(loadTodos).forEach(([key, data]) => {
             // Create a new item for each then add it to the map
-            const todo = loadItem(key, data, load.name);
+            const todo = loadItem(key, data);
         });
         
     }

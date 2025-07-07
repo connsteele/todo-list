@@ -42,9 +42,8 @@ const createProjectController = (model, view, emitter) => {
 
     //----------------------- Logic on creation -----------------------
     subEmitter();
-    view.bindupdateCardInfo(updateCard);
-    view.bindCreateItem(createItem);
-    view.bindClickHandler(cardClick);
+    view.bindInputHandler(updateCard);
+    view.bindClickHandlers(cardClick, createItem);
 
     return {
     }

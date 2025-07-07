@@ -117,63 +117,43 @@ const createProjectView = (title) => {
         // Add card to page
         divItems.appendChild(card);
     }
-
-    // Setup a callback for creating item cards
-    const bindCreateItem = (handler) => {
-        document.addEventListener("click", (e) => {
-            switch(e.target.className) {
-                case "create-item":
-                    let projName = e.target.parentElement.querySelector("h1").innerText;
-                    handler(projName);
-                    break;
-                default:
-                    // Nothing
-            }
-        });
-    }
-    
     // Settup a callback for input events on cards
-    const bindupdateCardInfo = (handler) => {
-        document.addEventListener("input", (e) => {
+    const bindInputHandler = (handler) => {
+        // Listen to a projects container
+        divProject.addEventListener("input", (e) => {
 
             // Add to item depending on what is edited
             const target = e.target;
-            let project = undefined;
+            const card = target.closest(".item");
+            if (!card) return; // Only operate on cards
+
             const editedItem = {
-
-            }
+                id: card.dataset.itemId,
+                project: card.dataset.project,
+            };
             
-            if (target.nodeName === "TEXTAREA") {
-                editedItem.id = target.parentElement.dataset.itemId;
-                editedItem.project = target.parentElement.dataset.project;
-                editedItem.info = target.value;
-            }
-            else if (target.className === "card-title") {
-                editedItem.id = target.parentElement.parentElement.dataset.itemId;
-                editedItem.project = target.parentElement.parentElement.dataset.project;
-                editedItem.title = target.value;
-            }
-            else if (target.className === "priority-input") {
-                let targetInt = parseInt(target.value);
-                const targetMax = parseInt(target.max);
-                const targetMin = parseInt(target.min);
-                // If input is too large or too small fix it
-                targetInt = targetInt > targetMax ? targetMax : targetInt;
-                targetInt = targetInt < targetMin ? targetMin : targetInt;
-                target.value = targetInt; // fix in the UI also
-                // Pass along
-                editedItem.id = target.parentElement.parentElement.dataset.itemId;
-                editedItem.project = target.parentElement.parentElement.dataset.project;
-                editedItem.priority = targetInt;
-            }
-            else if (target.className === "due-input") {
-                editedItem.id = target.parentElement.parentElement.dataset.itemId;
-                editedItem.project = target.parentElement.parentElement.dataset.project;
-                editedItem.dueDate = target.value;
-
-            }
-            else {
-                return;
+            switch (target.className) {
+                case "info":
+                    editedItem.info = target.value;
+                    break;
+                case "card-title":
+                    editedItem.title = target.value;
+                    break;
+                case "priority-input":
+                    // If input is too large or too small fix it
+                    let targetInt = parseInt(target.value);
+                    const targetMax = parseInt(target.max);
+                    const targetMin = parseInt(target.min);
+                    if (isNaN(targetInt)) targetInt = targetMin;
+                    targetInt = Math.max(targetMin, Math.min(targetMax, targetInt));
+                    target.value = targetInt; // UI
+                    editedItem.priority = targetInt; // For Model
+                    break;
+                case "due-input":
+                    editedItem.due = target.value;
+                    break;
+                default:
+                    return; // nothing
             }
 
             handler(editedItem);
@@ -181,24 +161,32 @@ const createProjectView = (title) => {
     }
 
     // Setup callback for clicking interactions with card
-    const bindClickHandler = (handler) => {
-        document.addEventListener("click", (e) => {
+    const bindClickHandlers = (cardActionHandler, createItemHandler) => {
+        // Listen on project container
+        divProject.addEventListener("click", (e) => {
             const target = e.target;
 
-            // Helper function
-            const createUpdateItem = (itemId, itemProject) => {
-                return {
-                    id: itemId,
-                    project: itemProject
-                }
-            };
+            //-------- Project functionality
+            if (target.matches(".create-item")) {
+                let projName = e.target.parentElement.querySelector("h1").innerText;
+                createItemHandler(projName);
+            }
             
+            //------- Card functionality
+            const card = target.closest(".item");
+            if (!card) {return};
+
+            // Helper function
+            const updateItem = {
+                id : card.dataset.itemId,
+                project: card.dataset.project,
+            }
+
+
             // Checkbox in card
-            if (target.id === "done") {
-                const updateItem = createUpdateItem(target.parentElement.parentElement.dataset.itemId, 
-                    target.parentElement.parentElement.dataset.project);
+            if (target.matches("#done")) {
                 updateItem.status = "toggle"; // toggle the current status
-                handler(updateItem);
+                cardActionHandler(updateItem);
                 return;
             }
             
@@ -206,13 +194,10 @@ const createProjectView = (title) => {
             // Buttons in card
             const btn = target.closest(".card-button");
             if (btn) {
-                const updateItem = createUpdateItem(btn.parentElement.parentElement.dataset.itemId,
-                    btn.parentElement.parentElement.dataset.project);
-
                 switch (btn.id) {
                     case "delete":
                         updateItem.delete = true;
-                        handler(updateItem);
+                        cardActionHandler(updateItem);
                         break;
                     case "edit":
                         break
@@ -243,9 +228,8 @@ const createProjectView = (title) => {
 
     return {
         render,
-        bindupdateCardInfo,
-        bindCreateItem,
-        bindClickHandler
+        bindInputHandler,
+        bindClickHandlers
     }
 }
 

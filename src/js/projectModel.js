@@ -11,7 +11,7 @@ const createProjectModel = (name, emitter) => {
     // Ask the collection to add a new item to the end and emit a message
     const addItem = (project, name=undefined) => {
         if (project === projName) {
-            const item = todos.createItem(name, projName);
+            const item = todos.createItem(name);
             projEmitter.emit("render", {item, todos});
         }
     }
