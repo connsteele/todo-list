@@ -4,6 +4,7 @@
     align-items: center;
     padding: 1rem;
     width: max(min-content, 100px);
+    height: min-content;
     gap: 1rem;
     border-radius: 1rem;
     outline: 3px solid black;
