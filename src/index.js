@@ -9,11 +9,11 @@ import { createPortfolio } from "./js/portfolio";
 let counter = 0;
 
 //--- Portfoilio 
-const portfolio = createPortfolio();
+let portfolio = createPortfolio();
 //--- Event setup for project creation
 document.addEventListener("click", (e) => {
     const target = e.target;
-    if (target.id === "btn-create") {
+    if (target.id === "project-create") {
         let emitter = mitt();
 
         // Project Creation
@@ -29,4 +29,20 @@ document.addEventListener("click", (e) => {
         portfolio.addProject(projectName, model);
         portfolio.printProjects();
     }
+    else if (target.id === "portfolio-new") {
+        portfolio = createPortfolio();
+        const projectDiv = document.querySelector("#projects");
+        while(projectDiv.firstChild) {
+            projectDiv.removeChild(projectDiv.firstChild);
+        }
+        counter = 0;
+
+    }
+    else if (target.id === "portfolio-save") {
+        console.log("Saving portfolio");
+    }
+    else if (target.id === "portfolio-load") {
+        console.log("Loading portfolio");
+    }
+
 });
