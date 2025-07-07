@@ -1,6 +1,6 @@
 // Purpose: Contains many projects
 
-const createPortfolio = () => {
+const createPortfolio = (name) => {
 
     // Add a project and a key (name)
     const addProject = (key, item) => {
@@ -17,12 +17,22 @@ const createPortfolio = () => {
     // Check if the portfolio already has a project associated with the key
     const hasKey = (key) => projectsMap.has(key);
 
+    const toJSON = () => {
+        return {
+            name: portfolioName,
+            projects: Object.fromEntries(projectsMap),
+        }
+    }
+
+    const portfolioName = name;
     let projectsMap = new Map();
 
     return {
         addProject,
         hasKey,
         printProjects,
+        projectsMap,
+        toJSON
     }
 }
 

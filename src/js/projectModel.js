@@ -3,13 +3,13 @@
 import { createTodoCollection } from "./todoCollection";
 
 // Create an object containing the data and logic for a project
-function createProjectModel(name, emitter) {
+const createProjectModel = (name, emitter) => {
     let projName = name;
     let projEmitter = emitter;
     let todos = createTodoCollection();
 
     // Ask the collection to add a new item to the end and emit a message
-    function addItem(project, name=undefined) {
+    const addItem = (project, name=undefined) => {
         if (project === projName) {
             const item = todos.createItem(name, projName);
             projEmitter.emit("render", {item, todos});
@@ -17,7 +17,7 @@ function createProjectModel(name, emitter) {
     }
 
     // Ask the collection to remove an item by key and emit a message
-    function removeItem(item){
+    const removeItem = (item) => {
         if (item.project === projName) {
             todos.deleteItem(item.id);
             projEmitter.emit("render", `${item.id} was deleted`);
@@ -32,12 +32,21 @@ function createProjectModel(name, emitter) {
     }
 
 
+    const toJSON = () => {
+        return {
+            name: projName,
+            todos: todos.toJSON(),
+        }
+    }
+
+
     return {
         name,
         todos,
         addItem,
         removeItem,
-        updateTodoItem
+        updateTodoItem,
+        toJSON
     }
 }
 

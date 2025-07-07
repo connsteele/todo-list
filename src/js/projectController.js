@@ -4,7 +4,7 @@
 import { createProjectModel } from "./projectModel";
 import { createProjectView } from "./projectView";
 
-function createProjectController(model, view, emitter) {
+const createProjectController = (model, view, emitter) => {
     let projModel = model;
     let projView = view;
     let projEmitter = emitter;

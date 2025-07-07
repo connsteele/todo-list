@@ -2,30 +2,44 @@
 import { format } from "date-fns" 
 
 // Format a given date to a more readable format
-function formatDate(date) {
+const formatDate = (date) => {
     return format(date,  "yyyy-mm-dd");
 }
 
 // Factory function for todoLogic model
-function createTodoModel(inTitle) {
+const createTodoModel = (inTitle) => {
     let title = inTitle;
     let info = "";
     let done = false;
     let priority = undefined; // 0 to 5
-    let dateCreated = formatDate(new Date());
-    let dateDue = undefined;
+    let created = formatDate(new Date());
+    let due = undefined;
     let tags = {};
+
+    
+    const toJSON = () => {
+        return {
+            _title: title,
+            _info: info,
+            _done: done,
+            _priority: priority,
+            _created: created,
+            _due: due,
+            _tags: tags
+        }
+    }
 
     
     return {
         title,
         info,
         priority,
-        dateCreated,
-        dateDue,
+        created,
+        due,
         tags,
         done,
-        formatDate
+        formatDate,
+        toJSON
     }
 }
 

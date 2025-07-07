@@ -6,7 +6,7 @@ import { format, parse } from "date-fns"
 import imgEdit from "../svg/edit.svg"
 import imgTrash from "../svg/trash-2.svg"
 
-function createProjectView(title) {
+const createProjectView = (title) => {
     // Remove all children divItems
     const clearItems = () => {
         while(divItems.firstChild) {
@@ -15,7 +15,7 @@ function createProjectView(title) {
     }
 
     // Add and render UI for all elements
-    function render(map) {
+    const render = (map) => {
         clearItems();
 
         // Add cards to a project for each todoModel

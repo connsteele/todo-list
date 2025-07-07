@@ -1,6 +1,6 @@
 import { createTodoModel } from "./todoModel";
 
-function createTodoCollection () {
+const createTodoCollection = () => {
 
     // Create and insert a new item into a collection
     const createItem = (itemName="", projectName) => {
@@ -52,6 +52,21 @@ function createTodoCollection () {
             item.done = !item.done;
         }
     }
+
+
+    const toJSON = () => {
+        let objMap = {
+            
+        }
+        modelMap.forEach( (value, key) => {
+            objMap[key] = value.toJSON();
+        })
+
+        return {
+            // map: Object.fromEntries(modelMap),
+            map: objMap,
+        }
+    }
     
 
     //-------------------- Variables and logic --------------------
@@ -64,7 +79,8 @@ function createTodoCollection () {
         getItem,
         getMap,
         deleteItem,
-        updateEntry
+        updateEntry,
+        toJSON
     }
 }
 
