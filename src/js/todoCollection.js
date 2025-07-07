@@ -1,6 +1,6 @@
 import { createTodoModel } from "./todoModel";
 
-const createTodoCollection = () => {
+const createTodoCollection = (load=undefined) => {
 
     // Create and insert a new item into a collection
     const createItem = (itemName="", projectName) => {
@@ -8,6 +8,23 @@ const createTodoCollection = () => {
         const item = createTodoModel(itemName, id);
         modelMap.set(id, item);
         return item;
+    }
+
+    // Create an item from existing data
+    const loadItem = (name, data, project) => {
+        const id = `${project}[${count++}]`;
+        const item = createTodoModel(name, id);
+        // set item attributes
+        item.title = data.title;
+        item.info = data.info;
+        item.done = data.done;
+        item.priority = data.priority;
+        item.created = data.created;
+        item.due = data.due;
+        item.tags = data.tags;
+
+        // Add to the map
+        modelMap.set(id, item);
     }
 
     // Delete an item from the internal map given a key
@@ -62,8 +79,17 @@ const createTodoCollection = () => {
     
 
     //-------------------- Variables and logic --------------------
-    let modelMap = new Map();
-    let count = 1; // used to create unique ids for models
+    let modelMap = new Map();;
+    let count = 1;
+    if (load) {
+        const loadTodos = load.todos.map;
+        Object.entries(loadTodos).forEach(([key, data]) => {
+            // Create a new item for each then add it to the map
+            const todo = loadItem(key, data, load.name);
+        });
+        
+    }
+
 
     return {
         createItem,

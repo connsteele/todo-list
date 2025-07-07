@@ -16,6 +16,12 @@ const createProjectModel = (name, emitter) => {
         }
     }
 
+    // Add an exisiting todo object and convert it to an internal map
+    const addTodos = (projData) => {
+        todos = createTodoCollection(projData);
+        projEmitter.emit("render", {"Loaded todos": todos});
+    }
+
     // Ask the collection to remove an item by key and emit a message
     const removeItem = (item) => {
         if (item.project === projName) {
@@ -41,8 +47,11 @@ const createProjectModel = (name, emitter) => {
 
 
     return {
+        //getter & setter
+        get todos() {return todos},
+        set todos(inTodos) {todos = inTodos}, 
         name,
-        todos,
+        addTodos,
         addItem,
         removeItem,
         updateTodoItem,

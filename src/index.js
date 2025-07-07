@@ -4,6 +4,7 @@ import { createProjectModel } from "./js/projectModel";
 import { createProjectView } from "./js/projectView";
 import { createProjectController } from "./js/projectController";
 import { createPortfolio } from "./js/portfolio";
+import { parse } from "date-fns";
 
 //--- Functions
 const storageAvailable = (type) => {
@@ -88,6 +89,38 @@ document.addEventListener("click", (e) => {
         // Destringify and load portfolio, projects and todo items from localStorage
         if (storageAvailable("localStorage")) {
             console.log("Loading from localStorage");
+            // Clear the page
+            const projectDiv = document.querySelector("#projects");
+            while(projectDiv.firstChild) {
+                projectDiv.removeChild(projectDiv.firstChild);
+            }
+            
+            let portfolioName = "portfolio";
+            const localPortfolio = localStorage.getItem(portfolioName);
+            if (localPortfolio) {
+                const localData = JSON.parse(localPortfolio);
+                // Create a portfolio from localStorage
+                let newPortfolio = createPortfolio(localData.name);
+                Object.keys(localData.projects).forEach(projName => {
+                    const emitter = mitt();
+                    const projData = localData.projects[projName];
+                    // Setup the MVC
+                    const project = createProjectModel(projName, emitter);
+                    const view = createProjectView(projName);
+                    const controller = createProjectController(project, view, emitter);
+                    // Add data into project and emit after it has been associated with the controller
+                    project.addTodos(projData);
+                    
+                    // Add the project to the portfolio
+                    newPortfolio.addProject(projName, project);
+                });
+                // Add projects
+
+            }
+            else {
+                console.error("No portfolio with the given name can be found");
+            }
+
         }
         else {
             // Not available

@@ -7,6 +7,12 @@ const createPortfolio = (name) => {
         projectsMap.set(key, item);
     }
 
+    // Add a project with pre-existing data (load)
+    // const loadProject = (key, item) => {
+    //     // init the project
+    //     projectsMap.set(key, item);
+    // }
+
     const printProjects = () => {
         let count = 0;
         projectsMap.forEach( (value, key) => {
@@ -29,6 +35,7 @@ const createPortfolio = (name) => {
 
     return {
         addProject,
+        //loadProject,
         hasKey,
         printProjects,
         projectsMap,
