@@ -46,7 +46,7 @@ const createTodoCollection = () => {
             item.priority = edited.priority;
         }
         if (edited.dueDate && edited.dueDate !== item.dateDue ) {
-            item.dateDue = edited.dueDate;
+            item.due = edited.dueDate;
         }
         if (edited.status) {
             item.done = !item.done;
@@ -55,16 +55,8 @@ const createTodoCollection = () => {
 
 
     const toJSON = () => {
-        let objMap = {
-            
-        }
-        modelMap.forEach( (value, key) => {
-            objMap[key] = value.toJSON();
-        })
-
         return {
-            // map: Object.fromEntries(modelMap),
-            map: objMap,
+            map: Object.fromEntries(modelMap),
         }
     }
     

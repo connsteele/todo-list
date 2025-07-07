@@ -15,29 +15,37 @@ const createTodoModel = (inTitle) => {
     let created = formatDate(new Date());
     let due = undefined;
     let tags = {};
-
     
     const toJSON = () => {
         return {
-            _title: title,
-            _info: info,
-            _done: done,
-            _priority: priority,
-            _created: created,
-            _due: due,
-            _tags: tags
+            title: title,
+            info: info,
+            done: done,
+            priority: priority,
+            created: created,
+            due: due,
+            tags: tags
         }
     }
 
     
     return {
-        title,
-        info,
-        priority,
-        created,
-        due,
-        tags,
-        done,
+        // Getters and setters
+        get title() {return title;},
+        set title(inTitle) {title = inTitle;},
+        get info() {return info;},
+        set info(inInfo) {info = inInfo;},
+        get priority() {return priority;},
+        set priority(inPriority) {priority = inPriority;},
+        get created() {return created;},
+        set created(inCreated) {created = inCreated;},
+        get due() {return due;},
+        set due(inDue) {due = inDue;},
+        get tags() {return tags;},
+        set tags(inTags) {tags = inTags;},
+        get done() {return done;},
+        set done(inDone) {done = inDone;},
+        // Others
         formatDate,
         toJSON
     }
