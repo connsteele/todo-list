@@ -114,7 +114,7 @@ document.addEventListener("click", (e) => {
                     // Add the project to the portfolio
                     newPortfolio.addProject(projName, project);
                 });
-                // Add projects
+                portfolio = newPortfolio;
 
             }
             else {
