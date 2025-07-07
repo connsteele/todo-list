@@ -31,6 +31,7 @@ function createProjectView(title) {
         const card = document.createElement("div");
         card.className = "item";
         card.dataset.itemId = key;
+        card.dataset.project = projTitle;
         // Card header and title
         const header = document.createElement("div");
         header.className = "card-header";
@@ -137,16 +138,19 @@ function createProjectView(title) {
 
             // Add to item depending on what is edited
             const target = e.target;
+            let project = undefined;
             const editedItem = {
 
             }
             
             if (target.nodeName === "TEXTAREA") {
-                editedItem.id = target.parentElement.dataset.itemId
+                editedItem.id = target.parentElement.dataset.itemId;
+                editedItem.project = target.parentElement.dataset.project;
                 editedItem.info = target.value;
             }
             else if (target.className === "card-title") {
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.project = target.parentElement.parentElement.dataset.project;
                 editedItem.title = target.value;
             }
             else if (target.className === "priority-input") {
@@ -159,10 +163,12 @@ function createProjectView(title) {
                 target.value = targetInt; // fix in the UI also
                 // Pass along
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.project = target.parentElement.parentElement.dataset.project;
                 editedItem.priority = targetInt;
             }
             else if (target.className === "due-input") {
                 editedItem.id = target.parentElement.parentElement.dataset.itemId;
+                editedItem.project = target.parentElement.parentElement.dataset.project;
                 editedItem.dueDate = target.value;
 
             }
@@ -180,15 +186,17 @@ function createProjectView(title) {
             const target = e.target;
 
             // Helper function
-            const createUpdateItem = (itemId) => {
+            const createUpdateItem = (itemId, itemProject) => {
                 return {
                     id: itemId,
+                    project: itemProject
                 }
             };
             
             // Checkbox in card
             if (target.id === "done") {
-                const updateItem = createUpdateItem(target.parentElement.parentElement.dataset.itemId);
+                const updateItem = createUpdateItem(target.parentElement.parentElement.dataset.itemId, 
+                    target.parentElement.parentElement.dataset.project);
                 updateItem.status = "toggle"; // toggle the current status
                 handler(updateItem);
                 return;
@@ -198,7 +206,8 @@ function createProjectView(title) {
             // Buttons in card
             const btn = target.closest(".card-button");
             if (btn) {
-                const updateItem = createUpdateItem(btn.parentElement.parentElement.dataset.itemId);
+                const updateItem = createUpdateItem(btn.parentElement.parentElement.dataset.itemId,
+                    btn.parentElement.parentElement.dataset.project);
 
                 switch (btn.id) {
                     case "delete":

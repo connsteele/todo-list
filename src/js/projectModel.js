@@ -17,14 +17,18 @@ function createProjectModel(name, emitter) {
     }
 
     // Ask the collection to remove an item by key and emit a message
-    function removeItem(key){
-        todos.deleteItem(key);
-        projEmitter.emit("render", `${key} was deleted`);
+    function removeItem(item){
+        if (item.project === projName) {
+            todos.deleteItem(item.id);
+            projEmitter.emit("render", `${item.id} was deleted`);
+        }
     }
 
     // Update a specific item in the array
     const updateTodoItem = (viewItem) => {
-        todos.updateEntry(viewItem, viewItem.id);
+        if (viewItem.project === projName) {
+            todos.updateEntry(viewItem, viewItem.id);
+        }
     }
 
 

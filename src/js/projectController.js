@@ -30,7 +30,7 @@ function createProjectController(model, view, emitter) {
             projModel.updateTodoItem(viewItem);
         }
         else if (viewItem.delete === true) {
-            projModel.removeItem(viewItem.id);
+            projModel.removeItem(viewItem);
         }
     }
 
